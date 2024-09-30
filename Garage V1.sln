@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Garage V1", "Garage V1\Garage V1.csproj", "{F530A9B3-E1D5-4279-87E5-3CD37766032A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F530A9B3-E1D5-4279-87E5-3CD37766032A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F530A9B3-E1D5-4279-87E5-3CD37766032A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F530A9B3-E1D5-4279-87E5-3CD37766032A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F530A9B3-E1D5-4279-87E5-3CD37766032A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
