@@ -3,10 +3,10 @@
 public interface IUI
 {
     void Run();
-    void ListAllVehicles(GarageHandler garage);
-    void ListVehicleTypes(GarageHandler garage);
-    void AddVehicle(GarageHandler garage);
-    void RemoveVehicle(GarageHandler garage);
-    void SearchVehicles(GarageHandler garage);
-    GarageHandler CreateGarage();
+    void ListAllVehicles(IHandler handler);
+    void ListVehicleTypes(IHandler handler);
+    void AddVehicle(IHandler handler);
+    void RemoveVehicle(IHandler handler);
+    void SearchVehicles(IHandler handler);
+    IHandler CreateHandler();
 }
