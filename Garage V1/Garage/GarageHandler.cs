@@ -1,9 +1,8 @@
 ﻿namespace Garage_V1.Garage;
 
-public class GarageHandler
+public class GarageHandler : IHandler
 {
     private List<Vehicle> _parkedVehicles;
-    
     public int Capacity { get; }
 
     public GarageHandler(int capacity)
