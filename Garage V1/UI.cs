@@ -4,20 +4,25 @@ public class ConsoleUI : IUI
 {
     private List<IHandler> _garages = new List<IHandler>();
 
+    public static void ShowMenu()
+    {
+        Console.WriteLine("\n--- Garage Management System ---");
+        Console.WriteLine("1. Create a new garage");
+        Console.WriteLine("2. List all vehicles in a garage");
+        Console.WriteLine("3. List vehicle types and counts");
+        Console.WriteLine("4. Add a vehicle to a garage");
+        Console.WriteLine("5. Remove a vehicle from a garage");
+        Console.WriteLine("6. Search for vehicles");
+        Console.WriteLine("7. Exit");
+        Console.Write("Enter your choice: ");
+    }
+    
     public void Run()
     {
+        ShowMenu();
+        
         while (true)
         {
-            Console.WriteLine("\n--- Garage Management System ---");
-            Console.WriteLine("1. Create a new garage");
-            Console.WriteLine("2. List all vehicles in a garage");
-            Console.WriteLine("3. List vehicle types and counts");
-            Console.WriteLine("4. Add a vehicle to a garage");
-            Console.WriteLine("5. Remove a vehicle from a garage");
-            Console.WriteLine("6. Search for vehicles");
-            Console.WriteLine("7. Exit");
-            Console.Write("Enter your choice: ");
-
             if (int.TryParse(Console.ReadLine(), out int choice))
             {
                 switch (choice)
