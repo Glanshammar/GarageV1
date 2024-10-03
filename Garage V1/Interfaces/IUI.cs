@@ -2,11 +2,11 @@
 
 public interface IUI
 {
-    void Run();
-    void ListAllVehicles(IHandler handler);
-    void ListVehicleTypes(IHandler handler);
-    void AddVehicle(IHandler handler);
-    void RemoveVehicle(IHandler handler);
-    void SearchVehicles(IHandler handler);
-    IHandler CreateHandler();
+    public void Run();
+    public void ListAllVehicles(IHandler handler);
+    public void ListVehicleTypes(IHandler handler);
+    public void AddVehicle(IHandler handler);
+    public void RemoveVehicle(IHandler handler);
+    public void SearchVehicles(IHandler handler);
+    public IHandler CreateGarage();
 }
