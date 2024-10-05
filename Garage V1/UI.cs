@@ -6,14 +6,14 @@ public class ConsoleUI : IUI
 
     public static void ShowMenu()
     {
-        Console.WriteLine("\n--- Garage Management System ---");
+        Console.WriteLine("--- Garage Management System ---");
+        Console.WriteLine("0. Exit");
         Console.WriteLine("1. Create a new garage");
         Console.WriteLine("2. List all vehicles in a garage");
         Console.WriteLine("3. List vehicle types and counts");
         Console.WriteLine("4. Add a vehicle to a garage");
         Console.WriteLine("5. Remove a vehicle from a garage");
         Console.WriteLine("6. Search for vehicles");
-        Console.WriteLine("7. Exit");
         Console.Write("Enter your choice: ");
     }
     
@@ -27,6 +27,8 @@ public class ConsoleUI : IUI
             {
                 switch (choice)
                 {
+                    case 0:
+                        return;
                     case 1:
                         _garages.Add(CreateGarage());
                         break;
@@ -45,10 +47,9 @@ public class ConsoleUI : IUI
                     case 6:
                         SearchVehicles(SelectGarage());
                         break;
-                    case 7:
-                        return;
                     default:
                         Console.WriteLine("Invalid choice. Please try again.");
+                        ShowMenu();
                         break;
                 }
             }
