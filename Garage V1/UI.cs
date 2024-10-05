@@ -86,13 +86,37 @@ public class ConsoleUI : IUI
 
     public void AddVehicle(IHandler handler)
     {
+        List<string> colorList = new List<string>
+        {
+            "Red", "Green", "Blue", "Yellow", "Black", "White", "Pink",
+            "Cyan", "Magenta", "Orange", "Purple", "Brown", "Gray", "Crimson"
+        };
+        
         Console.Write("Vehicle type (Car/Motorcycle/Airplane/Bus/Boat): ");
         string type = Console.ReadLine()?.Trim() ?? string.Empty;
-        Console.Write("Vehicle color: ");
-        string color = Console.ReadLine()?.Trim() ?? string.Empty;
+        
+        string color;
+        while (true)
+        {
+            Console.Write("Vehicle color: ");
+            color = Console.ReadLine()?.Trim() ?? string.Empty;
+            color = char.ToUpper(color[0]) + color.Substring(1).ToLower(); // Capitalize the first letter, lowercase the rest
+        
+            if (colorList.Contains(color))
+            {
+                break; // Valid color, exit the loop
+            }
+            else
+            {
+                Console.WriteLine("Invalid color. Please choose from the following:");
+                Console.WriteLine(string.Join(", ", colorList));
+            }
+        }
+        
         Console.Write("Registration number (optional, random if empty): ");
         string regNumber = Console.ReadLine()?.Trim() ?? string.Empty;
-        Console.Write("Fuel type: ");
+        
+        Console.Write("Fuel type (petrol/diesel): ");
         string fuelTypeInput = Console.ReadLine()?.Trim() ?? string.Empty;
 
         Car.FuelType fuelType;
