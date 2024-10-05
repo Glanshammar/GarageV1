@@ -10,7 +10,7 @@ public abstract class Vehicle : IVehicle
 
     protected Vehicle(string color, int numberOfWheels, string registrationNumber = null!)
     {
-        RegistrationNumber = registrationNumber ?? RandomRegistrationNumber();
+        RegistrationNumber = string.IsNullOrEmpty(registrationNumber) ? RandomRegistrationNumber() : registrationNumber;
         Color = color;
         NumberOfWheels = numberOfWheels;
     }
