@@ -185,37 +185,36 @@ public class ConsoleUI : IUI
 
     public void SearchVehicles(IHandler garage)
     {
-        Console.Write("Enter search property (Color/Brand/Model): ");
-        string property = Console.ReadLine()?.ToLower().Trim() ?? string.Empty;
+        Console.WriteLine("--- Search Vehicles After Properties ---"
+                          + "\n(Color, Brand, Model"
+                          );
         Console.Write("Enter search value: ");
-        string value = Console.ReadLine()?.ToLower().Trim() ?? string.Empty;
+        string value = Console.ReadLine()?.Trim().ToLower() ?? string.Empty;
 
         Func<Vehicle, bool> predicate = vehicle =>
-        {
-            switch (property)
-            {
-                case "color":
-                    return vehicle.Color.ToLower() == value;
-                case "brand":
-                    return vehicle.Brand.ToLower() == value;
-                case "model":
-                    return vehicle.Model.ToLower() == value;
-                default:
-                    return false;
-            }
-        };
+            (vehicle.Color?.ToLower().Contains(value) ?? false) ||
+            (vehicle.Brand?.ToLower().Contains(value) ?? false) ||
+            (vehicle.Model?.ToLower().Contains(value) ?? false);
 
-        var results = garage.SearchVehicles(predicate);
-        if (results.Count == 0)
+        try
         {
-            Console.WriteLine("No vehicles found matching the search criteria.");
-        }
-        else
-        {
-            foreach (var vehicle in results)
+            var results = garage.SearchVehicles(predicate);
+            if (results == null || results.Count == 0)
             {
-                Console.WriteLine(vehicle);
+                Console.WriteLine("No vehicles found matching the search criteria.");
             }
+            else
+            {
+                Console.WriteLine($"Found {results.Count} matching vehicles:");
+                foreach (var vehicle in results)
+                {
+                    Console.WriteLine(vehicle);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred while searching: {ex.Message}");
         }
     }
 
