@@ -14,7 +14,6 @@ public class ConsoleUI : IUI
         Console.WriteLine("4. Add a vehicle to a garage");
         Console.WriteLine("5. Remove a vehicle from a garage");
         Console.WriteLine("6. Search for vehicles");
-        Console.Write("Enter your choice: ");
     }
     
     public void Run()
@@ -23,7 +22,8 @@ public class ConsoleUI : IUI
         
         while (true)
         {
-            if (int.TryParse(Console.ReadLine(), out int choice))
+            Console.Write(">> ");
+            if (byte.TryParse(Console.ReadLine(), out byte choice))
             {
                 switch (choice)
                 {
@@ -78,14 +78,17 @@ public class ConsoleUI : IUI
 
     public void ListVehicleTypes(IHandler garage)
     {
+        Console.WriteLine("--- Vehicle Types ---");
         var typeCounts = garage.GetVehicleTypeCounts();
+        
+        if (typeCounts.Count == 0)
+            Console.WriteLine("No vehicle types found.");
+        
         foreach (var typeCount in typeCounts)
-        {
             Console.WriteLine($"{typeCount.Key.Name}: {typeCount.Value}");
-        }
     }
 
-    public void AddVehicle(IHandler handler)
+    public void AddVehicle(IHandler garage)
     {
         List<string> colorList = new List<string>
         {
@@ -154,7 +157,7 @@ public class ConsoleUI : IUI
                 return;
         }
 
-        if (handler.ParkVehicle(vehicle))
+        if (garage.ParkVehicle(vehicle))
         {
             Console.WriteLine("Vehicle added successfully.");
             Console.WriteLine(vehicle.ToString());
