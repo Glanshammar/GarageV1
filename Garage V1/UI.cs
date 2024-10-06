@@ -237,7 +237,8 @@ public class ConsoleUI : IUI
         if (_garages.Count == 0)
         {
             Console.WriteLine("No garages available. Creating a new garage.");
-            return CreateGarage();
+            _garages.Add(CreateGarage());
+            return _garages[0];
         }
         else if (_garages.Count == 1)
         {
