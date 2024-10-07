@@ -1,23 +1,30 @@
 ﻿namespace Garage_V1.FileHandling;
 
-public class JsonHandler : FileReader
+public static class JsonHandler
 {
-    public JsonHandler(string filePath) : base(filePath)
+    public static void Create(string filePath)
     {
-        if (!filePath.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
-        {
-            throw new ArgumentException("File must have a .json extension", nameof(filePath));
-        }
+        ValidateFilePath(filePath);
+
+        if (File.Exists(filePath))
+            throw new IOException($"File already exists: {filePath}");
+
+        // Create an empty JSON object
+        JObject emptyObject = new JObject();
+        string jsonContent = emptyObject.ToString(Formatting.Indented);
+        File.WriteAllText(filePath, jsonContent);
     }
 
-    public override string ReadContent()
+    public static string ReadContent(string filePath)
     {
-        return File.ReadAllText(FilePath);
+        ValidateFilePath(filePath);
+        return File.ReadAllText(filePath);
     }
 
-    public JObject? ReadAsJObject()
+    public static JObject? ReadAsJObject(string filePath)
     {
-        string jsonContent = ReadContent();
+        ValidateFilePath(filePath);
+        string jsonContent = ReadContent(filePath);
         try
         {
             return JObject.Parse(jsonContent);
@@ -28,24 +35,27 @@ public class JsonHandler : FileReader
         }
     }
 
-    public T? ReadAs<T>() where T : class
+    public static T? ReadAs<T>(string filePath) where T : class
     {
-        string jsonContent = ReadContent();
+        ValidateFilePath(filePath);
+        string jsonContent = ReadContent(filePath);
         return JsonConvert.DeserializeObject<T>(jsonContent);
     }
 
-    public void WriteContent(object? content)
+    public static void WriteContent(string filePath, object? content)
     {
+        ValidateFilePath(filePath);
         if (content == null)
             throw new ArgumentNullException(nameof(content));
         
         string jsonContent = JsonConvert.SerializeObject(content, Formatting.Indented);
-        File.WriteAllText(FilePath, jsonContent);
+        File.WriteAllText(filePath, jsonContent);
     }
 
-    public void UpdateProperty(string propertyPath, JToken newValue)
+    public static void UpdateProperty(string filePath, string propertyPath, JToken newValue)
     {
-        JObject? jsonObject = ReadAsJObject();
+        ValidateFilePath(filePath);
+        JObject? jsonObject = ReadAsJObject(filePath);
         if (jsonObject == null)
         {
             throw new InvalidOperationException("Failed to read JSON content as JObject.");
@@ -55,7 +65,7 @@ public class JsonHandler : FileReader
         if (token != null)
         {
             token.Replace(newValue);
-            WriteContent(jsonObject);
+            WriteContent(filePath, jsonObject);
         }
         else
         {
@@ -63,18 +73,28 @@ public class JsonHandler : FileReader
         }
     }
 
-    protected override bool ValidateFile()
+    public static bool ValidateFile(string filePath)
     {
-        if (!base.ValidateFile()) return false;
+        ValidateFilePath(filePath);
+        if (!File.Exists(filePath)) return false;
 
         try
         {
-            JObject.Parse(ReadContent());
+            JObject.Parse(ReadContent(filePath));
             return true;
         }
         catch (JsonReaderException)
         {
             return false;
         }
+    }
+
+    private static void ValidateFilePath(string filePath)
+    {
+        if (string.IsNullOrWhiteSpace(filePath))
+            throw new ArgumentException("File path cannot be null or empty.", nameof(filePath));
+
+        if (!filePath.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
+            throw new ArgumentException("File must have a .json extension", nameof(filePath));
     }
 }
