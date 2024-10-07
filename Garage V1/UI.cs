@@ -16,6 +16,7 @@ public class ConsoleUI : IUI
         Console.WriteLine("6. Search for vehicles");
     }
     
+    
     public void Run()
     {
         ShowMenu();
